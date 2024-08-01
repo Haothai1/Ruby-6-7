@@ -1,15 +1,15 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show edit update destroy logon]
 
   # GET /users or /users.json
-  # def index
-  #   @users = User.all
-  #    if (session[:current_user])
-  #     @current_user = User.find(session[:current_user])
-  #   else
-  #     @current_user = nil
-  #   end
-  # end
+  def index
+    @users = User.all
+    #  if (session[:current_user])
+    #   @current_user = User.find(session[:current_user])
+    # else
+    #   @current_user = nil
+    # end
+  end
 
   # GET /users/1 or /users/1.json
   def show
@@ -22,6 +22,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @user = User.find(params[:id])
   end
 
   # POST /users or /users.json
@@ -63,9 +64,11 @@ class UsersController < ApplicationController
   end
 
   def logon
-  session[:current_user] = @user.id
-  redirect_to users_path, notice: "Welcome #{@user.name}. You are logged in."
+    session[:current_user] = @user.id
+    redirect_to users_path, notice: "Welcome #{@user.name}. You are logged in."
   end
+
+  
 
   def logoff
     session.delete(:current_user)
