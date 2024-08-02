@@ -85,4 +85,16 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :skill_level)
     end
+    # Prompt user that they already have logged in
+    def require_no_user
+      if session[:current_user]
+        redirect_to root_path, alert: "You are already logged in."
+    end
+    # Prompt user to login
+    def require_user
+      unless session[:current_user]
+        redirect_to root_path, alert: "You need to log in first."
+      end
+    end
+  end
 end

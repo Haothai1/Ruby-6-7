@@ -61,7 +61,7 @@ class PostsController < ApplicationController
     end
 
     def post_params   # security check, also known as "strong parameters"
-      params[:post][:user_id] = session[:current_user]["id"] 
+      params[:post][:user_id] = session[:current_user]
         # here we have to add a parameter so that the post is associated with the current user
       params.require(:post).permit(:title,:content,:user_id)
     end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :subscriptions
   root 'forums#index'
 
    # User session routes
@@ -17,7 +18,6 @@ Rails.application.routes.draw do
   # Forum routes with nested posts and subscriptions
   resources :forums do
     resources :posts, shallow: true, except: [:index]
-    resources :subscriptions, shallow: true, except: [:index]
   end
   get '/subscriptions', to: 'subscriptions#index', as: 'subscriptions'
   
