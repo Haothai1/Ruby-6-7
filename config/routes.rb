@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :subscriptions
   root 'forums#index'
 
    # User session routes
