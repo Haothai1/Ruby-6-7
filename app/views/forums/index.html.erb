@@ -1,0 +1,19 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Forums</h1>
+
+<div id="forums">
+  <% @forums.each do |forum| %>
+    <%= render forum %>
+    <p>
+    <strong>Forum name:</strong>
+      <%= forum.forum_name %>
+    </p>
+    <p>
+    <strong>Forum description:</strong>
+      <%= forum.description %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New forum", new_forum_path %>

@@ -4,7 +4,7 @@ Questions for Lesson 7
 before some or all of the controller actions execute?  Where can you put that
 change so that it affects all controllers?
 
-
+The "before_action" method. We can put this change in the ApplicationController so that it affects all controllers.
 
 2. Consider the following statement:
 
@@ -14,13 +14,14 @@ This creates several files, including two you need to know about.  What are they
 After you do this statement but before starting the rails server, you have to do another
 command.  What is that command?
 
+The two important files created are the model file named app/models/subscription.rb and the migration file, db/migrate/(anyName)_create_subscriptions.rb. After this statement, we need to run bin/rails db:migrate the data.
 
 
 3. What table is created as a result of the migration described above? What are the column
 names in that table? What is the primary key? What are the foreign keys?  What does a 
 foreign key do?
 
-
+We created the table for subscriptions. The column names are id, which is the primary key, forum_id (foreign key), user_id (foreign key), and priority. A foreign key links a record in one table to a record in another table's data, making sure that there is referential integrity.
 
 4. You have the following lines in the Subscription model:
 
@@ -32,7 +33,7 @@ that if you have a @subscription (an instance of Subscription), you have a coupl
 used to refer to associated database methods.  What are those methods?  (Actually there are a few,
 but there are two in particular you should know.)
 
-
+The two methods are @subscription.user and @subscription.forum.
 
 5. You have the following lines in the User model.
 
@@ -43,7 +44,7 @@ has_many :forums, through: :subscriptions
 What are threee important methods that are available to instances of the user model because
 of these lines?
 
-
+Three important methods are user.subscriptions, user.posts, and user.forums method.
 
 6. Suppose that user is an instance of the User class. What kind of object is returned by
 user.subcriptions?  Hint: To find out, go into the Rails console for your application.
@@ -67,14 +68,14 @@ Try that last line.  You will see that it creates a subscription object, but tha
 object is not entirely empty.  Which attribute is set? Where does it get that
 value?
 
-
+The user.subscriptions call returns an (ActiveRecord::Associations::CollectionProxy) object. When we type user.subscriptions.new, the user_id attribute is set, and gets the value from the user instance.
 
 7. Suppose that user is an instance of User, and forum is an instance of Forum.  What
 Active Record Statement could you use to retrieve all the user's posts for that
 forum?  Hint: You need to have a where in your statement. Try this out in the console.
 You will see the SQL that is executed logged to the screen.  What is that SQL?
 
-
+The Active Record statement is user.posts.where(forum: forum). This SQL executed will look something like this SELECT "posts".* FROM "posts" WHERE "posts"."user_id" = ? AND "posts"."forum_id" = ? (the where states the conditions).
 
 8. You have the following method in your posts controller:
 
@@ -87,19 +88,19 @@ You will see the SQL that is executed logged to the screen.  What is that SQL?
 There is a security exposure, a risk that a hacker could do damage.  What is that
 risk? What two things are done in your code to prevent the risk?
 
-
+The risk is that a user could delete posts that don't belong to them. To prevent this from happening, we use before_action :check_logon to ensure the user is logged in and before_action :check_access to ensure the user can only delete their own posts.
 
 9. The routes for subscriptions are nested under the forum routes.  How does this
 change the routes?  What is the additional hash key and value that is passed in the
 params hash to the subscriptions controller as a result of this nesting? Which routes
 are unaffected by the nesting?
 
-
+Nesting routes under forums means the URL for subscriptions will include the forum ID. The additional hash key-value pair in params is :forum_id => value. The subscriptions#index route is unaffected by the nesting because it is defined separately as another route.
 
 
 10. Every action method must do exactly one of two things -- that is, each
 method may do all sorts of logic, but at the end, it has to do one of two
 things, depending on the outcome of the logic.  What are those two things?
 
-
+Every action method must either display a view or redirect_to another action or URL link.
 
