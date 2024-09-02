@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   get '/users/:id/edit', to: 'users#edit', as: 'edit_user'
   post '/users', to: 'users#create'
   patch '/users/:id', to: 'users#update'
-  delete '/users/:id', to: 'users#delete'
+  delete '/users/:id', to: 'users#destroy'
 
   # Forum routes with nested posts and subscriptions
   resources :forums do
