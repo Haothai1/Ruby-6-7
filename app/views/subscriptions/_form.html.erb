@@ -1,0 +1,16 @@
+<% if subscription.id %>
+  <%url = subscription_path%>
+<% else %>
+  <%url = forum_subscriptions_path(subscription.forum)%>
+<% end %>
+
+<%= form_with(model: subscription, url: url) do |form| %>
+  <h2><%= "Subscription for forum #{subscription.forum.forum_name}." %></h2>
+  <div class="field">
+    <%= form.label :priority %>
+    <%= form.number_field :priority, in: 1..10 %>
+  </div>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

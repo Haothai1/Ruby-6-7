@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Forums</h1>
+
+<div id="forums">
+  <% @forums.each do |forum| %>
+      <%= forum.forum_name %>
+    </p>
+    <p>
+    <strong>Forum description:</strong>
+      <%= forum.description %>
+    </p>
+    <p>
+      <%= link_to "Show this forum", forum %>
+    </p>
+    <p><%= link_to "Subscribe to forums", forum_subscriptions_path(forum) %></p>
+  <% end %>
+</div>
+
+<%= link_to "New forum", new_forum_path %>
