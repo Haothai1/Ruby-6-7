@@ -55,7 +55,7 @@ class PostsController < ApplicationController
     end
 
     def check_access
-      if @post.user_id != session[:current_user][:id]
+      if @post.user_id != session[:current_user]
         redirect_to forums_path, notice: "That's not your post, so you can't change it."
       end
     end

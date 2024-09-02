@@ -1,7 +1,7 @@
 <% if subscription.id %>
-  url = subscription_path
+  <%url = subscription_path%>
 <% else %>
-  url = forum_subscriptions_path(subscription.forum)
+  <%url = forum_subscriptions_path(subscription.forum)%>
 <% end %>
 
 <%= form_with(model: subscription, url: url) do |form| %>

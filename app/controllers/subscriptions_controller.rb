@@ -18,7 +18,7 @@ class SubscriptionsController < ApplicationController
     if @forum.subscriptions.where(user_id: @current_user.id).any?
     redirect_to forums_path, notice: "You are already subscribed to that forum."
   else
-    @subscription = @user.subscriptions.new
+    @subscription = @current_user.subscriptions.new
     @subscription.forum_id = @forum.id
   end
   end
@@ -29,7 +29,13 @@ class SubscriptionsController < ApplicationController
 
   # POST /subscriptions or /subscriptions.json
   def create
-    @subscription = @user.subscriptions.new(subscription_params) # change
+    @subscription = @current_user.subscriptions.new(subscription_params)
+    @subscription.forum_id = @forum.id
+
+    if @forum.nil?
+      redirect_to forums_path, alert: "Forum not found."
+      return
+    end
 
     respond_to do |format|
       if @subscription.save
